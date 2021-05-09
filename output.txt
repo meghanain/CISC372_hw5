@@ -1,0 +1,45 @@
+Script started on 2021-05-09 14:30:05-04:00
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ make
+make: Nothing to be done for 'all'.
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ ls
+[0m[38;5;40mimage[0m    image.h    image_omp.c    image_pthread.c  output.txt  [38;5;13mpic2.jpg[0m  [38;5;13mpic4.jpg[0m   stb_image.h
+image.c  [38;5;40mimage_omp[0m  [38;5;40mimage_pthread[0m  makefile         [38;5;13mpic1.jpg[0m    [38;5;13mpic3.jpg[0m  README.md  stb_image_write.h
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ ./image_on[Kmp
+Usage: image <filename> <type>
+	where type is one of (edge,sharpen,blur,gauss,emboss,identity)
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ ./image_pthread
+Usage: image <filename> <type>
+	where type is one of (edge,sharpen,blur,gauss,emboss,identity)
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ ./image_pthread pic1.jpg
+Usage: image <filename> <type>
+	where type is one of (edge,sharpen,blur,gauss,emboss,identity)
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ ./image_pthread pic1.jpg edge
+Took 4 seconds
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ ./image_pthread pic1.jpg edge[K[K[K[Ksharpen
+Took 4 seconds
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ ./image_pthread pic1.jpg sharpen[K[K[K[K[K[K[Kblur
+Took 5 seconds
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ ./image_pthread pic1.jpg blur[K[K[K[Kgauss
+Took 5 seconds
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ ./image_pthread pic1.jpg gauss[K[K[K[K[Kemboss
+Took 5 seconds
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ ./image_pthread pic1.jpg emboss[K[K[K[K[K[Kidentity
+Took 4 seconds
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ ./image_pthread pic1.jpg identity[C[C[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K pic1.jpg end[K[Kdge
+Took 7 seconds
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ ./image pic1.jpg edge[1@_[1@o[1@m[1@p
+Took 6 seconds
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ ./image_omp pic1.jpg edge[K[K[K[Kha[K[Ksharpen
+Took 7 seconds
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ ./image_omp pic1.jpg sharpen[K[K[K[K[K[K[Kblur
+Took 7 seconds
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ ./image_omp pic1.jpg blur[K[K[K[Kgauss
+Took 7 seconds
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ ./image_omp pic1.jpg gauss[K[K[K[K[Kemboss
+Took 8 seconds
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ ./image_omp pic1.jpg emboss[K[K[K[K[K[Kidentity
+Took 7 seconds
+]0;inabath@br012:~/CISC372_hw5[inabath@r001 CISC372_hw5]$ exit
+exit
+
+Script done on 2021-05-09 14:34:55-04:00
