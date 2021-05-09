@@ -19,5 +19,5 @@ uint8_t getPixelValue(Image* srcImage,int x,int y,int bit,Matrix algorithm);
 void convolute(Image* srcImage,Image* destImage,Matrix algorithm);
 int Usage();
 enum KernelTypes GetKernelType(char* type);
-
+void* p_convolute(void* rank);
 #endif

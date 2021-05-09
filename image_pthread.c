@@ -11,6 +11,8 @@
 #include "stb_image_write.h"
 #include <pthread.h>
 #define num 10
+enum KernelTypes t;
+Image srcImage, destImage;
 
 //An array of kernel matrices to be used for image convolution.  
 //The indexes of these match the enumeration from the header file. ie. algorithms[BLUR] returns the kernel corresponding to a box blur.
@@ -58,13 +60,21 @@ uint8_t getPixelValue(Image* srcImage,int x,int y,int bit,Matrix algorithm){
 //            destImage: A pointer to a  pre-allocated (including space for the pixel array) structure to receive the convoluted image.  It should be the same size as srcImage
 //            algorithm: The kernel matrix to use for the convolution
 //Returns: Nothing
-void convolute(Image* srcImage,Image* destImage,Matrix algorithm){
-    int row,pix,bit,span;
-    span=srcImage->bpp*srcImage->bpp;
-    for (row=0;row<srcImage->height;row++){
-        for (pix=0;pix<srcImage->width;pix++){
-            for (bit=0;bit<srcImage->bpp;bit++){
-                destImage->data[Index(pix,row,srcImage->width,bit,srcImage->bpp)]=getPixelValue(srcImage,pix,row,bit,algorithm);
+void* p_convolute(void* rank){
+    int row,pix,bit,span, last_row;
+
+    row=((long) rank)*(srcImage.height/num);
+    if((long) rank==num-1){
+	    last_row=srcImage.height%num+last_row;
+    }
+    else {
+	    last_row=row+srcImage.height/num;
+    }
+    span=srcImage.bpp*srcImage.bpp;
+    for (;row<last_row;row++){
+        for (pix=0;pix<srcImage.width;pix++){
+            for (bit=0;bit<srcImage.bpp;bit++){
+                destImage.data[Index(pix,row,srcImage.width,bit,srcImage.bpp)]=getPixelValue(&srcImage,pix,row,bit,algorithms[t]);
             }
         }
     }
@@ -114,13 +124,21 @@ int main(int argc,char** argv){
     destImage.width=srcImage.width;
     destImage.data=malloc(sizeof(uint8_t)*destImage.width*destImage.bpp*destImage.height);
     
-    convolute(&srcImage,&destImage,algorithms[type]);
+    pthread_t* thrd_handles;
+    thrd_handles=(pthread_t *)malloc(num*sizeof(pthread_t));
+    for (long thrd=0; thrd<num; thrd++){
+	    pthread_create(&thrd_handles[thrd], NULL, &p_convolute, (void *) thrd);
+    }
+    for (long thrd=0; thrd<num; thrd++){
+	    pthread_join(thrd_handles[thrd],NULL);
+    }
+    
     stbi_write_png("output.png",destImage.width,destImage.height,destImage.bpp,destImage.data,destImage.bpp*destImage.width);
     stbi_image_free(srcImage.data);
     
     free(destImage.data);
     t2=time(NULL);
     printf("Took %ld seconds\n",t2-t1);
-    
+    free(thrd_handles);
    return 0;
 }
